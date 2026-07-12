@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+<<<<<<< HEAD
   darkMode: 'class', // Enables dark mode toggling using 'dark' class
   theme: {
     extend: {
@@ -34,3 +35,10 @@ export default {
   },
   plugins: [],
 }
+=======
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+>>>>>>> db7b5401af2fbeeeb8072e986cdf50145d0fb924
