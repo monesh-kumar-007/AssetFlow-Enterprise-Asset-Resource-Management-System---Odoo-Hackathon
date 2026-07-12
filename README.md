@@ -15,7 +15,6 @@
 🧰 Tech Stack
 🛠️ Prerequisites
 🚀 Getting Started
-🔐 Environment Variables
 📡 API Routes Overview
 👥 Team
 ---
@@ -115,6 +114,9 @@ cd AssetFlow-Enterprise-Asset-Resource-Management-System---Odoo-Hackathon
 ```bash
 cd backend
 npm install
+npm install morgan
+npm install --save-dev nodemon
+npm run dev
 ```
 Seed the database with initial data:
 ```bash
@@ -135,31 +137,21 @@ npm run dev
 ```
 > ✅ Frontend runs at **`http://localhost:5173`** by default (Vite).
 ---
-🔐 Environment Variables
-Create a `.env` file inside the `backend/` directory:
-```env
-PORT=5000
-JWT_SECRET=your_super_secret_jwt_key_here
-NODE_ENV=development
-```
-> ⚠️ Never commit your `.env` file to version control. Make sure it is listed in `.gitignore`.
----
 📡 API Routes Overview
-All API routes are prefixed with `/api`.
-Method	Endpoint	Description	Auth Required
-`POST`	`/api/auth/register`	Register a new user	❌
-`POST`	`/api/auth/login`	Login & receive JWT token	❌
-`GET`	`/api/assets`	List all assets	✅
-`POST`	`/api/assets`	Register a new asset	✅
-`GET`	`/api/allocations`	View all allocations	✅
-`POST`	`/api/allocations`	Allocate an asset	✅
-`GET`	`/api/bookings`	View all bookings	✅
-`POST`	`/api/bookings`	Create a booking	✅
-`GET`	`/api/maintenance`	View maintenance logs	✅
-`POST`	`/api/maintenance`	Log a maintenance request	✅
-`GET`	`/api/audits`	View audit trail	✅
-`GET`	`/api/dashboard`	Get dashboard metrics	✅
-`GET`	`/api/org`	Get organization/dept data	✅
+Method	Description	Auth Required
+`POST`	Register a new user	❌
+`POST`	Login & receive JWT token	❌
+`GET`	List all assets	✅
+`POST`	Register a new asset	✅
+`GET`	View all allocations	✅
+`POST`	Allocate an asset	✅
+`GET`	View all bookings	✅
+`POST`	Create a booking	✅
+`GET`	View maintenance logs	✅
+`POST`	Log a maintenance request	✅
+`GET`	View audit trail	✅
+`GET`	Get dashboard metrics	✅
+`GET`	Get organization/dept data	✅
 > ✅ = Requires `Authorization: Bearer <token>` header
 ---
 👥 Team
