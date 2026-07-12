@@ -1,111 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   CSS VARIABLES - Full Theme System
+   ============================================= */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Dark mode defaults */
+  --bg-base: #020617;
+  --bg-surface: rgba(15, 23, 42, 0.85);
+  --bg-card: rgba(30, 41, 59, 0.70);
+  --bg-input: #0f172a;
+  --bg-hover: rgba(30, 41, 59, 0.50);
+  --bg-active: rgba(124, 58, 237, 0.15);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-accent: #a78bfa;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --border-default: rgba(51, 65, 85, 0.6);
+  --border-strong: rgba(71, 85, 105, 0.8);
+  --border-subtle: rgba(30, 41, 59, 0.8);
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  --glass-bg: rgba(30, 41, 59, 0.70);
+  --glass-border: rgba(255, 255, 255, 0.07);
+
+  --scrollbar-track: rgba(15, 23, 42, 0.5);
+  --scrollbar-thumb: rgba(139, 92, 246, 0.4);
+  --scrollbar-thumb-hover: rgba(139, 92, 246, 0.7);
+
+  --sidebar-bg: rgba(2, 6, 23, 0.75);
+  --header-bg: rgba(2, 6, 23, 0.60);
+}
+
+/* =============================================
+   LIGHT MODE OVERRIDES
+   Applied by toggling class="light-mode" on root
+   ============================================= */
+.light-mode {
+  --bg-base: #f1f5f9;
+  --bg-surface: rgba(255, 255, 255, 0.90);
+  --bg-card: rgba(255, 255, 255, 0.80);
+  --bg-input: #ffffff;
+  --bg-hover: rgba(241, 245, 249, 0.80);
+  --bg-active: rgba(124, 58, 237, 0.08);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-accent: #7c3aed;
+
+  --border-default: rgba(148, 163, 184, 0.40);
+  --border-strong: rgba(100, 116, 139, 0.50);
+  --border-subtle: rgba(203, 213, 225, 0.70);
+
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.08);
+
+  --scrollbar-track: rgba(241, 245, 249, 0.8);
+  --scrollbar-thumb: rgba(124, 58, 237, 0.35);
+  --scrollbar-thumb-hover: rgba(124, 58, 237, 0.6);
+
+  --sidebar-bg: rgba(255, 255, 255, 0.88);
+  --header-bg: rgba(248, 250, 252, 0.88);
+}
+
+/* =============================================
+   BASE STYLES
+   ============================================= */
+@layer base {
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    @apply font-sans antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+/* =============================================
+   SEMANTIC UTILITY CLASSES (theme-aware)
+   ============================================= */
+@layer components {
+  /* Glassmorphism panels */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  /* Input fields */
+  .input-field {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    @apply rounded-lg py-2 px-3 w-full focus:outline-none text-sm transition-colors;
+  }
+  .input-field:focus {
+    border-color: #7c3aed;
+  }
+  .light-mode .input-field {
+    @apply shadow-sm;
+  }
+
+  /* Table row hover */
+  .table-row-hover {
+    transition: background 0.15s ease;
+  }
+  .table-row-hover:hover {
+    background: var(--bg-hover);
+  }
+
+  /* Card surface */
+  .surface-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    @apply rounded-xl;
+  }
+
+  /* Sidebar */
+  .sidebar-panel {
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-right: 1px solid var(--border-subtle);
+    transition: background 0.3s ease;
+  }
+
+  /* Header */
+  .header-bar {
+    background: var(--header-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
   }
 }
 
-body {
-  margin: 0;
+/* =============================================
+   LIGHT MODE: Tailwind class overrides
+   ============================================= */
+
+/* Text colors in light mode */
+.light-mode .text-slate-100 { color: #0f172a !important; }
+.light-mode .text-slate-200 { color: #1e293b !important; }
+.light-mode .text-slate-300 { color: #334155 !important; }
+.light-mode .text-slate-400 { color: #475569 !important; }
+.light-mode .text-slate-500 { color: #64748b !important; }
+.light-mode .text-white     { color: #0f172a !important; }
+
+/* Backgrounds in light mode */
+.light-mode .bg-slate-950   { background-color: #f8fafc !important; }
+.light-mode .bg-slate-900   { background-color: #f1f5f9 !important; }
+.light-mode .bg-slate-850   { background-color: #e2e8f0 !important; }
+.light-mode .bg-slate-800   { background-color: #e2e8f0 !important; }
+.light-mode .bg-slate-750   { background-color: #cbd5e1 !important; }
+
+/* Borders in light mode */
+.light-mode .border-slate-900  { border-color: rgba(148,163,184,0.35) !important; }
+.light-mode .border-slate-850  { border-color: rgba(148,163,184,0.35) !important; }
+.light-mode .border-slate-800  { border-color: rgba(148,163,184,0.40) !important; }
+.light-mode .border-slate-750  { border-color: rgba(100,116,139,0.40) !important; }
+.light-mode .border-slate-700  { border-color: rgba(100,116,139,0.50) !important; }
+
+/* Divide borders */
+.light-mode .divide-slate-800\/40 > * + * { border-color: rgba(148,163,184,0.30) !important; }
+.light-mode .divide-slate-850\/40 > * + * { border-color: rgba(148,163,184,0.25) !important; }
+
+/* Modal overlay */
+.light-mode .bg-slate-950\/75   { background-color: rgba(15, 23, 42, 0.60) !important; }
+
+/* Input fields in light mode */
+.light-mode .bg-slate-900.border { 
+  background-color: #ffffff !important; 
+  border-color: rgba(148, 163, 184, 0.50) !important;
+}
+.light-mode select,
+.light-mode input,
+.light-mode textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.50) !important;
+}
+.light-mode select option {
+  background-color: #ffffff;
+  color: #0f172a;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* Gradient text stays readable */
+.light-mode .bg-gradient-to-r.bg-clip-text {
+  background-image: linear-gradient(to right, #6d28d9, #4f46e5) !important;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* Active nav item in light mode */
+.light-mode .bg-primary-600\/15 {
+  background-color: rgba(124, 58, 237, 0.10) !important;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+/* Hover states in light mode */
+.light-mode .hover\:bg-slate-900\/20:hover { background-color: rgba(241, 245, 249, 0.80) !important; }
+.light-mode .hover\:bg-slate-900\/30:hover { background-color: rgba(226, 232, 240, 0.80) !important; }
+.light-mode .hover\:bg-slate-800\/10:hover { background-color: rgba(241, 245, 249, 0.70) !important; }
+.light-mode .hover\:bg-slate-800\/20:hover { background-color: rgba(226, 232, 240, 0.70) !important; }
+.light-mode .hover\:bg-slate-700:hover     { background-color: #cbd5e1 !important; }
+.light-mode .hover\:bg-slate-750:hover     { background-color: #cbd5e1 !important; }
+
+/* Font mono in light mode */
+.light-mode .font-mono { color: inherit; }
+
+/* Notification dropdown in light mode */
+.light-mode .bg-primary-600\/5 { background-color: rgba(124, 58, 237, 0.06) !important; }
+.light-mode .bg-slate-950\/15  { background-color: rgba(248, 250, 252, 0.90) !important; }
+
+/* =============================================
+   SMOOTH TRANSITIONS
+   ============================================= */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+/* Exceptions: don't slow down animations */
+.animate-spin, .animate-pulse, .animate-ping, .animate-bounce,
+.animate-fadeIn, [class*="transition-transform"] {
+  transition-property: transform, opacity !important;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* =============================================
+   CUSTOM SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
 }
