@@ -5,7 +5,7 @@ const { Asset, AssetAllocation, TransferRequest, User, Department } = require('.
 const { authenticate, requireRole } = require('../middleware/auth');
 const { logActivity, createNotification } = require('../utils/logger');
 
-// POST /api/allocations/allocate - Allocate asset (Asset Manager & Admin)
+// POST /api/allocations/allocate - Allocate asset (Asset Manager & Admin) 
 router.post('/allocate', authenticate, requireRole(['Admin', 'Asset Manager']), async (req, res) => {
   try {
     const { assetId, employeeId, departmentId, expectedReturnDate } = req.body;
@@ -135,7 +135,7 @@ router.post('/transfer-request', authenticate, async (req, res) => {
       return res.status(400).json({ message: 'Cannot transfer to the same employee who currently holds the asset.' });
     }
 
-    // Create transfer request
+    // Creates transfer request
     const transfer = await TransferRequest.create({
       assetId,
       currentHolderId,
